@@ -26,7 +26,7 @@ steps:
   - '--max-instances'
   - '3'
   - '--min-instances'
-  - '0'
+  - '1'
   - '--timeout'
   - '300'
   - '--allow-unauthenticated'

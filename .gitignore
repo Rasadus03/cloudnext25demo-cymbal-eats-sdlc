@@ -87,3 +87,4 @@ restaurant-menu-details-msa/target/test-classes/com/cymbaleats/restaurant/detail
 cymbal-eats-fe/cymbal-eats-fe.iml
 order-mgmt-msa/src/main/main.iml
 order-mgmt-msa/src/test/test.iml
+.vscode/settings.json
