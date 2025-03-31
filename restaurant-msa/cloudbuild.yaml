@@ -28,7 +28,7 @@ steps:
     - '--min-instances'
     - '1'
     - '--timeout'
-    - '1'
+    - '2'
     - '--allow-unauthenticated'
     - '--set-env-vars'
     - 'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo'
