@@ -27,7 +27,7 @@ public List<Restaurant> getAllRestaurants()
     throws ExecutionException, InterruptedException, IOException {
   System.out.println("Loading all restaurants!!");
   try {
-    Thread.sleep(0.9 * 1000);
+    Thread.sleep(1 * 1000);
 } catch (InterruptedException ie) {
     Thread.currentThread().interrupt();
 }
