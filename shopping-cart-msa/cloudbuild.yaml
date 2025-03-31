@@ -1,0 +1,54 @@
+steps:
+- name: 'gcr.io/cloud-builders/mvn'
+  args: ['clean', 'package', '-Dmaven.test.skip=true' ] # added the step to build the jar
+  id: 'maven-build'
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'image-build'
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/shopping-cart-api', '--build-arg=JAR_FILE=target/shopping-cart-0.1.jar', '.']
+  waitFor: ['maven-build'] # Wait for the Maven build to complete
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'push', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/shopping-cart-api' ]
+  id: 'image-push'
+  waitFor: ['maven-build', 'image-build']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  id: 'service-deploy'
+  entrypoint: gcloud
+  args:
+  - 'run'
+  - 'deploy'
+  - 'shopping-cart-api'
+  - '--image'
+  - 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/shopping-cart-api'
+  - '--region'
+  - 'us-central1'
+  - '--concurrency'
+  - '80'
+  - '--max-instances'
+  - '3'
+  - '--min-instances'
+  - '0'
+  - '--timeout'
+  - '300'
+  - '--allow-unauthenticated'
+  - '--set-env-vars'
+  - 'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo'
+  waitFor: [ 'image-push' ]
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+  - 'run'
+  - 'services'
+  - 'add-iam-policy-binding'
+  - 'shopping-cart-api'
+  - '--region'
+  - 'us-central1'
+  - '--member'
+  - 'allUsers'
+  - '--role'
+  - 'roles/run.invoker'
+  waitFor: [ 'service-deploy' ]
+images:
+- 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/shopping-cart-api'
+options:
+    logging: CLOUD_LOGGING_ONLY
+
