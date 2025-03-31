@@ -88,3 +88,5 @@ cymbal-eats-fe/cymbal-eats-fe.iml
 order-mgmt-msa/src/main/main.iml
 order-mgmt-msa/src/test/test.iml
 .vscode/settings.json
+__pycache__/locustfile.cpython-312.pyc
+__pycache__/web-page.cpython-312.pyc

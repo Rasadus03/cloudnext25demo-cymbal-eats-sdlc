@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 function RestaurantDetails({ restaurants, addToCart }) {
   const {id} = useParams();
- 
+  const restaurant = restaurants.find((r) => r.restaurantId === parseInt(id));
   const [restaurantMenu, setRestaurantMenu] = useState([]);
   const [isBusy, setBusy] = useState(true)
 
