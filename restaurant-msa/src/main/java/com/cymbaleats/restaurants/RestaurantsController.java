@@ -26,7 +26,11 @@ public class RestaurantsController {
 public List<Restaurant> getAllRestaurants()
     throws ExecutionException, InterruptedException, IOException {
   System.out.println("Loading all restaurants!!");
-
+  try {
+    Thread.sleep(1 * 1900);
+} catch (InterruptedException ie) {
+    Thread.currentThread().interrupt();
+}
   return restaurantUtils.getAllRestuarants();
 }
 
