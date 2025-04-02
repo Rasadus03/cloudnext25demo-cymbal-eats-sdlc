@@ -16,7 +16,7 @@ steps:
   args:
   - 'run'
   - 'deploy'
-  - 'order-mgmt-api'
+  - 'order-mgmt-api --no-cpu-throttling'
   - '--image'
   - 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/order-mgmt-api'
   - '--region'
@@ -32,7 +32,6 @@ steps:
   - '--set-env-vars'
   - 'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo'
  #- ' --allow-unauthenticated '
-  - ' --no-cpu-throttling '
   waitFor: [ 'image-push' ]
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
