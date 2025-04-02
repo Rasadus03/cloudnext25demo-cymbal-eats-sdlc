@@ -5,26 +5,7 @@ steps:
     args: [ 'push', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/cymbal-eats-fe' ]
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
-    args:
-    - 'run'
-    - 'deploy'
-    - 'cymbal-eats-fe'
-    - '--image'
-    - 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/cymbal-eats-fe'
-    - '--region'
-    - 'us-central1'
-    - '--concurrency'
-    - '80'
-    - '--max-instances'
-    - '3'
-    - '--min-instances'
-    - '1'
-    - '--timeout'
-    - '300'
-    - '--allow-unauthenticated '
-    - '--no-cpu-throttling '
-    - '--set-env-vars'
-    - 'GOOGLE_CLOUD_PROJECT=raniamoh-next25-demo'
+    args: [ 'run', 'deploy', 'cymbal-eats-fe','--image', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/cymbal-eats-fe', '--region', 'us-central1', '--concurrency','80', '--max-instances', '3', '--min-instances',  '1',  '--timeout',  '300',   '--set-env-vars',  'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo', '--no-cpu-throttling']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:

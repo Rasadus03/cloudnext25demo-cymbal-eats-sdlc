@@ -14,7 +14,6 @@ steps:
   id: 'service-deploy'
   entrypoint: gcloud
   args: [ 'run', 'deploy', 'order-mgmt-api','--image', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/order-mgmt-api', '--region', 'us-central1', '--concurrency','80', '--max-instances', '3', '--min-instances',  '1',  '--timeout',  '300',   '--set-env-vars',  'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo', '--no-cpu-throttling']
- #- ' --allow-unauthenticated '
   waitFor: [ 'image-push' ]
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
