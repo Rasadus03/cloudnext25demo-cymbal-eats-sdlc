@@ -30,6 +30,7 @@ steps:
     - '--timeout'
     - '2'
     - '--allow-unauthenticated'
+    - '--no-cpu-throttling'
     - '--set-env-vars'
     - 'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo'
     waitFor: [ 'image-push' ]
