@@ -31,7 +31,7 @@ steps:
   - '300'
   - '--set-env-vars'
   - 'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo'
-  - ' --allow-unauthenticated '
+ #- ' --allow-unauthenticated '
   - ' --no-cpu-throttling '
   waitFor: [ 'image-push' ]
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
