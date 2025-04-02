@@ -29,10 +29,10 @@ steps:
   - '1'
   - '--timeout'
   - '300'
-  - ' --allow-unauthenticated '
-  - ' --no-cpu-throttling '
   - '--set-env-vars'
   - 'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo'
+  - ' --allow-unauthenticated '
+  - ' --no-cpu-throttling '
   waitFor: [ 'image-push' ]
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
