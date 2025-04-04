@@ -1,0 +1,25 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/cymbal-eats-fe', './cymbal-eats-fe']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/cymbal-eats-fe' ]
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: [ 'run', 'deploy', 'cymbal-eats-fe','--image', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/cymbal-eats-fe', '--region', 'us-east1', '--concurrency','80', '--max-instances', '6', '--min-instances',  '3',  '--timeout',  '300',   '--set-env-vars',  'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo', '--no-cpu-throttling', '--cpu=6', '--memory=16Gi']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+    - 'run'
+    - 'services'
+    - 'add-iam-policy-binding'
+    - 'cymbal-eats-fe'
+    - '--region'
+    - 'us-east1'
+    - '--member'
+    - 'allUsers'
+    - '--role'
+    - 'roles/run.invoker'
+images:
+- 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/cymbal-eats-fe'
+options:
+    logging: CLOUD_LOGGING_ONLY
