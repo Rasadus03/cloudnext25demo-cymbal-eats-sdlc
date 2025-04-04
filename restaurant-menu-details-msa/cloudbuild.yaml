@@ -13,7 +13,7 @@ steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   id: 'service-deploy'
   entrypoint: gcloud
-  args: [ 'run', 'deploy', 'restaurant-details-api','--image', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/restaurant-details-api', '--region', 'us-central1', '--concurrency','80', '--max-instances', '3', '--min-instances',  '1',  '--timeout',  '300',   '--set-env-vars',  'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo', '--no-cpu-throttling', '--cpu=6', '--memory=16Gi']
+  args: [ 'run', 'deploy', 'restaurant-details-api','--image', 'us-central1-docker.pkg.dev/raniamoh-next25-demo/cloud-next25-demo/restaurant-details-api', '--region', 'us-central1', '--concurrency','80', '--max-instances', '6', '--min-instances',  '3',  '--timeout',  '300',   '--set-env-vars',  'GOOGLE_CLOUD_PROJECT=cloud-next25-screendemo', '--no-cpu-throttling', '--cpu=6', '--memory=16Gi']
   waitFor: [ 'image-push' ]
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
