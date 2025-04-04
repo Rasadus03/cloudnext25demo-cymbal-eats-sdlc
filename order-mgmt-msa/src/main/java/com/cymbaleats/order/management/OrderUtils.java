@@ -39,7 +39,7 @@ public class OrderUtils {
     }
     createTablesIfNotExists();
   }
-  public void insertOrder(Order order) {
+  public long insertOrder(Order order) {
     init();
     long orderId = getOrderId();
     System.out.println("Inserting order " + orderId);
@@ -57,6 +57,7 @@ public class OrderUtils {
     order.setEstimatedDeliveryTime(new Date());
     order.setDeliveryTime(new Date());
     this.spannerTemplate.insert(order);
+    return orderId;
   }
   public Order getOrderDetails(Order order) {
     // Delete all of the rows in the Singer table.
@@ -148,6 +149,11 @@ public class OrderUtils {
       this.spannerDatabaseAdminTemplate.executeDdlStrings(
           Collections.singletonList(this.spannerSchemaUtils.getCreateTableDdlString(
               Address.class)), true);
+    }
+    if (!this.spannerDatabaseAdminTemplate.tableExists("Notifications")) {
+      this.spannerDatabaseAdminTemplate.executeDdlStrings(
+          Collections.singletonList(this.spannerSchemaUtils.getCreateTableDdlString(
+              Notification.class)), true);
     }
   }
 

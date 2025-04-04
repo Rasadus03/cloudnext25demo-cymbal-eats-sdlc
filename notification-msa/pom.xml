@@ -10,9 +10,9 @@
       <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cymbaleats</groupId>
-    <artifactId>order-mgmt</artifactId>
+    <artifactId>notification</artifactId>
     <version>0.1</version>
-    <name>order-mgmt</name>
+    <name>notification</name>
     <description>Cloud Next 25 SDLC demo</description>
     <url/>
     <licenses>
@@ -64,10 +64,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
       </dependency>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-webflux</artifactId>
-      </dependency>
+
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>
@@ -154,4 +151,4 @@
         </plugin>
       </plugins>
     </build>
-  </project>
+</project>

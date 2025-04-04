@@ -1,4 +1,4 @@
-package com.cymbaleats.order.management;
+package com.cymbaleats.notification;
 import com.google.cloud.spring.data.spanner.core.mapping.PrimaryKey;
 import com.google.cloud.spring.data.spanner.core.mapping.Table;
 import com.google.cloud.spring.data.spanner.core.mapping.NotMapped;
@@ -11,8 +11,6 @@ public class User {
   private String userId;
   private String userName;
   private String email;
-  @NotMapped
-  private List<ShoppingCartItem> shoppingCartItems;
   @Interleaved
   private List<Order> orders;
   @Interleaved
@@ -53,15 +51,6 @@ public class User {
     this.email = email;
   }
 
-  public List<ShoppingCartItem> getShoppingCartItems() {
-    return shoppingCartItems;
-  }
-
-  public void setShoppingCartItems(
-      List<ShoppingCartItem> shoppingCartItems) {
-    this.shoppingCartItems = shoppingCartItems;
-  }
-
   public List<Order> getOrders() {
     return orders;
   }
@@ -76,8 +65,8 @@ public class User {
     sb.append("userId='").append(userId).append('\'');
     sb.append(", userName='").append(userName).append('\'');
     sb.append(", email='").append(email).append('\'');
-    sb.append(", shoppingCartItems=").append(shoppingCartItems);
     sb.append(", orders=").append(orders);
+    sb.append(", notifications=").append(notifications);
     sb.append('}');
     return sb.toString();
   }
