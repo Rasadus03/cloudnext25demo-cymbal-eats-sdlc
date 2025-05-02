@@ -1,5 +1,5 @@
 # Use the slim version of the node 14 image as our base
-FROM node:14-slim
+FROM node:23-slim
 
 # Create a directory for our application in the container
 RUN mkdir -p /usr/src/app
