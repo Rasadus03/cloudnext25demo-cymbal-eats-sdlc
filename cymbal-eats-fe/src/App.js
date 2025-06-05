@@ -18,10 +18,13 @@ import OrderDetails from './components/OrderDetails';
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
+import {linkWithPopup} from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
+import { FacebookAuthProvider } from "firebase/auth";
+import {EmailAuthProvider}  from "firebase/auth";
 import {signOut}  from "firebase/auth";
 import { Console } from 'winston/lib/winston/transports';
-
+import {signInWithEmailAndPassword} from "firebase/auth";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -34,8 +37,13 @@ function App() {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [orders, setOrders] = useState([]); // Filtered restaurants
 //  const {authenticateJWT, requestLogger} = require('./Auth');
-  const config = {
+  const config1 = {
     apiKey: 'AIzaSyDWKDNl8iDQqIqGUk7cccdDydogBhdJV98',
+    authDomain: 'raniamoh-next25-demo.firebaseapp.com',
+  };
+
+   const config = {
+    apiKey: 'AIzaSyDdl5c0RADYP_LYhcxPnMy9B_MUsK8zbFY',
     authDomain: 'raniamoh-next25-demo.firebaseapp.com',
   };
   const firebase = initializeApp(config);
@@ -51,7 +59,9 @@ function App() {
         data.set("uid", user.uid )
         data.set("photoURL", user.photoURL);
         // User is signed in.
-        document.getElementById('signInButton').innerText = 'Sign Out';
+        document.getElementById('signInButton').innerText = 'Sign Out Google';
+        document.getElementById('signInButton2').innerText = 'Sign Out Facebook';
+        document.getElementById('signInButton3').innerText = 'Sign Out Email/Pwd';
        //2 document.getElementById('warningText').innerText = '                                                                    ';
         setCustomer(data);
         console.log( (customer instanceof Map) +"testtttttt");
@@ -59,7 +69,9 @@ function App() {
         fetchCartCount();
       } else {
         // No user is signed in.
-        document.getElementById('signInButton').innerText = 'Sign In';
+        document.getElementById('signInButton').innerText = 'Sign In Google';
+        document.getElementById('signInButton2').innerText = 'Sign In Facebook';
+        document.getElementById('signInButton3').innerText = 'Sign In Email/Pwd';
        // document.getElementById('warningText').innerText = 'Please Signin to use our cool Application and get delicious Foot :)!';
         data.set("email", 'None');
         setCustomer(data);
@@ -71,6 +83,9 @@ function App() {
 
     });
   }
+
+
+
   useEffect(() => {
     initApp();
     console.log("customer name===="+customerName);
@@ -101,7 +116,7 @@ function App() {
     const provider  = new GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/userinfo.email');
     const data = new Map();
-
+    console.log ("Rania = " + getAuth(firebase));
     await signInWithPopup(getAuth(firebase), provider)
         .then(result => {
           // Returns the signed in user along with the provider's credential
@@ -161,6 +176,138 @@ function App() {
 
   };
 
+
+  const  signInUser2 = async () => {
+    const provider  = new FacebookAuthProvider();
+   // provider.addScope('public_profile,email');
+    const data = new Map();
+
+    await signInWithPopup(getAuth(firebase), provider)
+        .then(result => {
+          // Returns the signed in user along with the provider's credential
+        //  console.log(JSON.stringify(result.user));
+          //console.log(`${result.user.displayName} logged in.`);
+          data.set("name", result.user.displayName)
+          data.set("email", result.user.email)
+          data.set("uid", result.user.uid )
+          data.set("photoURL", result.user.photoURL);
+          setCustomerName(result.user.displayName);
+        })
+        .catch(err => {
+          console.log(`Error during sign in: ${err.message}`);
+        });
+    while (!(customer instanceof Map)){
+      setCustomer(data);
+    }
+    console.log("user = "+ JSON.stringify(customer));
+   //document.getElementById('warningText').innerText = '                                                                    ';
+    //console.log("user name = "+customer.get("name"));
+  };
+
+
+  const  signOutUser2 = async () =>  {
+    await signOut(getAuth(firebase))
+        .then(result => {})
+        .catch(err => {
+          console.log(`Error during sign out: ${err.message}`);
+        });
+    const data = new Map();
+
+    data.set("email", 'None');
+
+    while (!(customer instanceof Map)){
+      setCustomer(data);
+      setCustomerName('None');
+    }
+   // document.getElementById('warningText').innerText = ' Please Signin to use our cool Application and get delicious Foot :)!';
+  };
+
+// Toggle Sign in/out button
+  const  toggle2 = async () => {
+    if (!getAuth(firebase).currentUser) {
+      console.log("be4 SignIn!!");
+      await signInUser2();
+      console.log("user = "+ JSON.stringify(customer));
+      console.log("user email = "+ customer.get("email"));
+     // fetchCartCount();
+    } else {
+      console.log("be4 SignOut!!");
+      await signOutUser2();
+      console.log("user = "+ JSON.stringify(customer));
+
+      console.log("user email = "+ customer.get("email"));
+      setCartItemsCount(0);
+    }
+
+  };
+
+
+  const  signInUser3 = async (username, pwd) => {
+    //const provider  = new EmailAuthProvider();
+   // const credential = EmailAuthProvider.credential(username, pwd);
+   // provider.addScope('public_profile,email');
+    const data = new Map();
+    console.log("Username ="+username);
+
+    await signInWithEmailAndPassword(getAuth(firebase), username, pwd)
+        .then(result => {
+          // Returns the signed in user along with the provider's credential
+        //  console.log(JSON.stringify(result.user));
+          //console.log(`${result.user.displayName} logged in.`);
+          console.log("user -"+ result.user.email);
+          data.set("name", result.user.email)
+          data.set("email", result.user.email)
+          data.set("uid", result.user.uid )
+          data.set("photoURL", result.user.photoURL);
+          setCustomerName(result.user.displayName);
+        })
+        .catch(err => {
+          console.log(`Error during sign in: ${err.message}`);
+        });
+    while (!(customer instanceof Map)){
+      setCustomer(data);
+    }
+    console.log("user = "+ JSON.stringify(customer));
+   //document.getElementById('warningText').innerText = '                                                                    ';
+    //console.log("user name = "+customer.get("name"));
+  };
+
+
+  const  signOutUser3 = async () =>  {
+    await signOut(getAuth(firebase))
+        .then(result => {})
+        .catch(err => {
+          console.log(`Error during sign out: ${err.message}`);
+        });
+    const data = new Map();
+
+    data.set("email", 'None');
+
+    while (!(customer instanceof Map)){
+      setCustomer(data);
+      setCustomerName('None');
+    }
+   // document.getElementById('warningText').innerText = ' Please Signin to use our cool Application and get delicious Foot :)!';
+  };
+
+// Toggle Sign in/out button
+  const  toggle3 = async (username, pwd) => {
+    if (!getAuth(firebase).currentUser) {
+      console.log("be4 SignIn!!");
+      await signInUser3(username, pwd);
+      console.log("user = "+ JSON.stringify(customer));
+      console.log("user email = "+ customer.get("email"));
+     // fetchCartCount();
+    } else {
+      console.log("be4 SignOut!!");
+      await signOutUser3();
+      console.log("user = "+ JSON.stringify(customer));
+
+      console.log("user email = "+ customer.get("email"));
+      setCartItemsCount(0);
+    }
+
+  };
     const fetchCartCount = async () => {
     if (customer instanceof Map) {
       // Replace with your actual API endpoint
@@ -339,7 +486,7 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <Header cartItemCount={cartItemsCount} toogle={toggle} /> {/* Pass cart item count */}
+        <Header cartItemCount={cartItemsCount} toogle={toggle} toogleFace={toggle2} toogleEmail={toggle3} /> {/* Pass cart item count */}
         <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
         <Routes>
           <Route path="/" element={<HomePage customerName={customerName} />} />
