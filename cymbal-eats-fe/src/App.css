@@ -38,6 +38,10 @@ body {
 }
 .signin-button {
   align-items: end;
+  font-size: 16px;
+  background-color: rgb(246, 0, 197);
+  color: #eee;
+  border: #f4f4f4;
 }
 .app-header .warning p {
   color: rgb(193, 29, 159);
