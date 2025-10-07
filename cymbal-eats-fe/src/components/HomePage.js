@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function HomePage({customerName}) {
-  const [welcome, setWelcome] = useState([]);
+  const [welcome, setWelcome] = useState("");
     useEffect(() => {
   
      
   console.log ("test wwww ===" +customerName.length +"---");
   if (customerName !== "None" && customerName.length >0 ) {
-   setWelcome( "Welcome back," +customerName);
+   setWelcome( "Welcome back, " +customerName);
    //etWelcome("Welcome to Cymbal Eats Food Delivery!");
   } else {
     setWelcome("Welcome to Cymbal Eats Food Delivery!");
