@@ -10,7 +10,7 @@ function HomePage({customerName}) {
      
   console.log ("test wwww ===" +customerName.length +"---");
   if (customerName !== "None" && customerName.length >0 ) {
-   setWelcome( "Welcome back," +customerName);
+   setWelcome( "Welcome back again," +customerName);
    //etWelcome("Welcome to Cymbal Eats Food Delivery!");
   } else {
     setWelcome("Welcome to Cymbal Eats Food Delivery!");
