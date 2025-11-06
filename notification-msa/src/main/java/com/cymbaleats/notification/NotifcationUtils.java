@@ -15,27 +15,31 @@ import com.google.cloud.spanner.ResultSet;
  * execute DML and SQL queries, save POJOs, and read entities.
  */
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class NotifcationUtils {
 
 
-  private SpannerTemplate spannerTemplate;
+  private final SpannerTemplate spannerTemplate;
 
-  private SpannerSchemaUtils spannerSchemaUtils;
+  private final SpannerSchemaUtils spannerSchemaUtils;
 
 
-  private SpannerDatabaseAdminTemplate spannerDatabaseAdminTemplate;
+  private final SpannerDatabaseAdminTemplate spannerDatabaseAdminTemplate;
 
-  private void init(){
-    if (spannerTemplate == null || spannerSchemaUtils == null || spannerDatabaseAdminTemplate == null) {
-      spannerTemplate = DataSourceConfiguration.spannerTemplate;
-      spannerSchemaUtils= DataSourceConfiguration.spannerSchemaUtils;
-      spannerDatabaseAdminTemplate =DataSourceConfiguration.spannerDatabaseAdminTemplate;
-      createTablesIfNotExists();
-    }
+  public NotifcationUtils(SpannerTemplate spannerTemplate, SpannerSchemaUtils spannerSchemaUtils, SpannerDatabaseAdminTemplate spannerDatabaseAdminTemplate) {
+    this.spannerTemplate = spannerTemplate;
+    this.spannerSchemaUtils = spannerSchemaUtils;
+    this.spannerDatabaseAdminTemplate = spannerDatabaseAdminTemplate;
   }
+
+  @PostConstruct
+  public void init() {
+    createTablesIfNotExists();
+  }
+
   public void insertNotification(Notification notification) {
-    init();
     long notificationId = getNotificationId();
     System.out.println("Inserting notification " + notificationId);
     notification.setNotificationId(notificationId);
@@ -43,14 +47,12 @@ public class NotifcationUtils {
   }
 
   public void updateNotificationStatus(Notification notification) {
-    init();
     this.spannerTemplate.update(notification);
   }
-  
+
   public List<Notification> getUserNotification(User user) {
     // Delete all of the rows in the Singer table.
     //this.spannerTemplate.delete(Singer.class, KeySet.all());
-    init();
     List<Notification> notification = this.spannerTemplate
         .query(Notification.class, Statement.of("SELECT * "
                 + "FROM Notifications WHERE userId ='" +user.getUserId()+"'"),
@@ -62,7 +64,6 @@ public class NotifcationUtils {
   public long getUserUnreadNotificationCount(User user) {
     // Delete all of the rows in the Singer table.
     //this.spannerTemplate.delete(Singer.class, KeySet.all());
-    init();
     List<Notification> notification = this.spannerTemplate
         .query(Notification.class, Statement.of("SELECT * "
                 + "FROM Notifications WHERE userId ='" +user.getUserId()+"' AND status='Unread'"),

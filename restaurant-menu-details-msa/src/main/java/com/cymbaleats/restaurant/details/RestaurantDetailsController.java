@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RestaurantDetailsController {
 
   private static final Logger logger = Logger.getLogger("RestaurantDetailsController");
-  private static MenuUtils menuUtils = new MenuUtils();
+  private final MenuUtils menuUtils;
+
+    public RestaurantDetailsController(MenuUtils menuUtils) {
+        this.menuUtils = menuUtils;
+    }
 
 
-
-
-
-  @GetMapping("/restaurant-details-api/restaurant-menu")
+    @GetMapping("/restaurant-details-api/restaurant-menu")
   public List<MenuItem> getRestaurantMenu(@RequestParam(value="id")String restaurantId)
       throws ExecutionException, InterruptedException, IOException {
     Restaurant restaurant = new Restaurant(Long.parseLong(restaurantId));

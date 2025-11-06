@@ -20,9 +20,13 @@ import org.springframework.beans.factory.annotation.Value;
 public class RestaurantsController {
 
   private static final Logger logger = Logger.getLogger("RestaurantsController");
-  private static RestaurantUtils restaurantUtils = new RestaurantUtils();
+  private final RestaurantUtils restaurantUtils;
 
-@GetMapping("/restaurants-api/restaurants")
+    public RestaurantsController(RestaurantUtils restaurantUtils) {
+        this.restaurantUtils = restaurantUtils;
+    }
+
+    @GetMapping("/restaurants-api/restaurants")
 public List<Restaurant> getAllRestaurants()
     throws ExecutionException, InterruptedException, IOException {
   System.out.println("Loading all restaurants!!");

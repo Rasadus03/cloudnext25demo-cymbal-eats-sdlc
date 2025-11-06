@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.cymbaleats.order.management.OrderManagementControllerTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.120 s -- in com.cymbaleats.order.management.OrderManagementControllerTest

@@ -21,10 +21,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class NotificationController {
 
   private static final Logger logger = Logger.getLogger("NotificationController");
-  private NotifcationUtils notificationUtils = new NotifcationUtils();
+  private final NotifcationUtils notificationUtils;
   //private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yy-HH:mm:ss");
 
-  @GetMapping("/notification/list-notifications")
+    public NotificationController(NotifcationUtils notificationUtils) {
+        this.notificationUtils = notificationUtils;
+    }
+
+    @GetMapping("/notification/list-notifications")
   public List<Notification> getUserNotifications(@RequestParam(value="user-id")String userId)
       throws ExecutionException, InterruptedException, IOException {
    User user = new User(userId);

@@ -18,27 +18,31 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * execute DML and SQL queries, save POJOs, and read entities.
  */
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class RestaurantUtils {
 
 
-  private SpannerTemplate spannerTemplate;
+  private final SpannerTemplate spannerTemplate;
 
-  private SpannerSchemaUtils spannerSchemaUtils;
+  private final SpannerSchemaUtils spannerSchemaUtils;
 
 
-  private SpannerDatabaseAdminTemplate spannerDatabaseAdminTemplate;
+  private final SpannerDatabaseAdminTemplate spannerDatabaseAdminTemplate;
 
-  private void init(){
-    if (spannerTemplate == null || spannerSchemaUtils == null || spannerDatabaseAdminTemplate == null) {
-      spannerTemplate = DataSourceConfiguration.spannerTemplate;
-      spannerSchemaUtils= DataSourceConfiguration.spannerSchemaUtils;
-      spannerDatabaseAdminTemplate =DataSourceConfiguration.spannerDatabaseAdminTemplate;
+    public RestaurantUtils(SpannerTemplate spannerTemplate, SpannerSchemaUtils spannerSchemaUtils, SpannerDatabaseAdminTemplate spannerDatabaseAdminTemplate) {
+        this.spannerTemplate = spannerTemplate;
+        this.spannerSchemaUtils = spannerSchemaUtils;
+        this.spannerDatabaseAdminTemplate = spannerDatabaseAdminTemplate;
     }
-  }
+
+    @PostConstruct
+    public void init() {
+        createTablesIfNotExists();
+    }
+
   public void insertRestuarant(Restaurant restaurant) {
-    init();
-    createTablesIfNotExists();
     this.spannerTemplate.insert(restaurant);
   }
   public List<Restaurant> getAllRestuarants() {

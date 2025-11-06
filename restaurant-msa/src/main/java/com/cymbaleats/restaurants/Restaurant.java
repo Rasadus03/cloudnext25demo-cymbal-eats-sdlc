@@ -5,9 +5,11 @@ import com.google.cloud.spring.data.spanner.core.mapping.Table;
 import java.util.Date;
 import java.util.List;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Table(name = "Restaurants")
+@NoArgsConstructor
 public class Restaurant {
   @PrimaryKey
   private long restaurantId;
