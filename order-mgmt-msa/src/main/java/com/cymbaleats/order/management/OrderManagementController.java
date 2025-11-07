@@ -32,10 +32,14 @@ import reactor.core.publisher.Mono;
 public class OrderManagementController {
 
   private static final Logger logger = Logger.getLogger("ShoppingCartController");
-  private OrderUtils orderUtils = new OrderUtils();
-  private static Map<String, Method> orderItemsMethods = new HashMap<>();
-  private static RestTemplate restTemplate = new RestTemplate();
+  private final OrderUtils orderUtils;
+  private final RestTemplate restTemplate;
   private static final String notificationSvcUrl = "https://cymbal-eats.org/notification/addnotification";
+
+  public OrderManagementController(OrderUtils orderUtils, RestTemplate restTemplate) {
+    this.orderUtils = orderUtils;
+    this.restTemplate = restTemplate;
+  }
 
   @GetMapping("/order-mgmt-api/list-orders")
   public List<Order> getUserOrders(@RequestParam(value="user-id")String userId)

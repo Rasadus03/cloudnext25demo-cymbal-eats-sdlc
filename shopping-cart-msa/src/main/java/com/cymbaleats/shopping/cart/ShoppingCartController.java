@@ -18,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ShoppingCartController {
 
   private static final Logger logger = Logger.getLogger("ShoppingCartController");
-  private CartUtils cartUtils = new CartUtils();
+    private final CartUtils cartUtils;
   //private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yy-HH:mm:ss");
 
-  @PostMapping("/shopping-cart-api/addUser") // Change to @PostMapping for a proper add operation
+    public ShoppingCartController(CartUtils cartUtils) {
+        this.cartUtils = cartUtils;
+    }
+
+    @PostMapping("/shopping-cart-api/addUser") // Change to @PostMapping for a proper add operation
   public String addShoppingCartItem(@RequestBody User user) throws ExecutionException, InterruptedException, IOException {
     cartUtils.insertUser(user);
     return "User added";  // Return a more appropriate response (e.g., the created restaurant object)

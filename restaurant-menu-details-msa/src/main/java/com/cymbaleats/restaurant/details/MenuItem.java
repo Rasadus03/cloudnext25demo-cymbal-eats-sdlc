@@ -3,10 +3,13 @@ package com.cymbaleats.restaurant.details;
 import com.google.cloud.spring.data.spanner.core.mapping.Interleaved;
 import com.google.cloud.spring.data.spanner.core.mapping.PrimaryKey;
 import com.google.cloud.spring.data.spanner.core.mapping.Table;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 
 @Table(name = "MenuItems")
+@NoArgsConstructor
 public class MenuItem {
   @PrimaryKey
   private long restaurantId;
