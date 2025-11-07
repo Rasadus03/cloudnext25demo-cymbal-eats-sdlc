@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.cymbaleats.notification.NotificationControllerTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.314 s -- in com.cymbaleats.notification.NotificationControllerTest
