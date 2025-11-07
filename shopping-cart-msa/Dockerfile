@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.8_9-jre
+FROM openjdk:26-ea-slim-trixie
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} shopping-cart-api.jar
 
