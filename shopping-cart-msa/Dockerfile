@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21.0.8_9-jre
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} shopping-cart-api.jar
 
